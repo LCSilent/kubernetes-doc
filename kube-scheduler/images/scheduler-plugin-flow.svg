@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 750" width="960" height="750">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', 'SimHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+  </defs>
+  <rect width="960" height="750" fill="#ffffff"/>
+  <text x="480" y="40" text-anchor="middle" font-size="20" font-weight="600" fill="#111827">调度插件执行流程</text>
+  <g transform="translate(380, 80)">
+    <rect x="0" y="0" width="200" height="50" rx="25" ry="25" fill="#dbeafe" stroke="#93c5fd" stroke-width="2"/>
+    <text x="100" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#1d4ed8">1. QueueSort</text>
+  </g>
+  <text x="480" y="150" text-anchor="middle" font-size="12" fill="#6b7280">按优先级排序Pod队列</text>
+  <path d="M 480 160 V 190" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+  <g transform="translate(380, 200)">
+    <rect x="0" y="0" width="200" height="50" rx="25" ry="25" fill="#fef3c7" stroke="#fcd34d" stroke-width="2"/>
+    <text x="100" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#92400e">2. PreFilter</text>
+  </g>
+  <text x="480" y="270" text-anchor="middle" font-size="12" fill="#6b7280">Pod预检查，快速过滤</text>
+  <path d="M 480 280 V 310" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+  <g transform="translate(380, 320)">
+    <rect x="0" y="0" width="200" height="50" rx="25" ry="25" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+    <text x="100" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#991b1b">3. Filter</text>
+  </g>
+  <text x="480" y="390" text-anchor="middle" font-size="12" fill="#6b7280">逐个节点过滤，筛选候选节点</text>
+  <path d="M 480 400 V 430" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+  <g transform="translate(380, 440)">
+    <polygon points="100,0 200,35 100,70 0,35" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="100" y="42" text-anchor="middle" font-size="13" font-weight="600" fill="#78350f">有候选节点?</text>
+  </g>
+  <path d="M 580 475 H 720 V 520 H 580" stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+  <text x="750" y="470" text-anchor="start" font-size="12" fill="#dc2626">否</text>
+  <g transform="translate(780, 500)">
+    <rect x="0" y="0" width="140" height="45" rx="8" ry="8" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+    <text x="70" y="28" text-anchor="middle" font-size="12" font-weight="600" fill="#991b1b">PostFilter抢占</text>
+  </g>
+  <path d="M 480 510 V 540" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+  <text x="500" y="530" text-anchor="start" font-size="12" fill="#16a34a">是</text>
+  <g transform="translate(380, 550)">
+    <rect x="0" y="0" width="200" height="50" rx="25" ry="25" fill="#d1fae5" stroke="#6ee7b7" stroke-width="2"/>
+    <text x="100" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#065f46">4. PreScore+Score</text>
+  </g>
+  <text x="480" y="620" text-anchor="middle" font-size="12" fill="#6b7280">为每个候选节点评分</text>
+  <path d="M 480 630 V 660" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+  <g transform="translate(380, 670)">
+    <rect x="0" y="0" width="200" height="50" rx="25" ry="25" fill="#fef9c3" stroke="#fde047" stroke-width="2"/>
+    <text x="100" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#854d0e">5. Bind</text>
+  </g>
+  <text x="480" y="740" text-anchor="middle" font-size="12" fill="#6b7280">选择最佳节点并绑定</text>
+</svg>

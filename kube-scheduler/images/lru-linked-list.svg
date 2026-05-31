@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500">
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: Helvetica Neue, Helvetica, Arial, sans-serif; }
+  </style>
+  <rect width="1000" height="500" fill="#ffffff"/>
+  <text x="500" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">Doubly Linked List - LRU Mechanism for NodeInfo</text>
+  <text x="50" y="70" font-size="14" font-weight="700" fill="#111827">Initial State (after startup)</text>
+  <rect x="50" y="90" width="900" height="100" rx="6" fill="#f9fafb" stroke="#6b7280"/>
+  <rect x="100" y="110" width="120" height="60" rx="4" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+  <text x="160" y="135" text-anchor="middle" font-size="11" font-weight="600">Node-1</text>
+  <text x="160" y="150" text-anchor="middle" font-size="9" fill="#6b7280">Generation: 1</text>
+  <text x="160" y="165" text-anchor="middle" font-size="9" fill="#6b7280">headNode</text>
+  <line x1="220" y1="140" x2="280" y2="140" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="250" y="130" font-size="8" fill="#6b7280">next</text>
+  <rect x="280" y="110" width="120" height="60" rx="4" fill="#ffffff" stroke="#059669" stroke-width="1.5"/>
+  <text x="340" y="135" text-anchor="middle" font-size="11">Node-2</text>
+  <text x="340" y="150" text-anchor="middle" font-size="9" fill="#6b7280">Generation: 1</text>
+  <line x1="400" y1="140" x2="460" y2="140" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="460" y="110" width="120" height="60" rx="4" fill="#ffffff" stroke="#059669" stroke-width="1.5"/>
+  <text x="520" y="135" text-anchor="middle" font-size="11">Node-3</text>
+  <text x="520" y="150" text-anchor="middle" font-size="9" fill="#6b7280">Generation: 1</text>
+  <line x1="580" y1="140" x2="640" y2="140" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="610" y="155" font-size="8" fill="#6b7280">next</text>
+  <rect x="640" y="110" width="120" height="60" rx="4" fill="#ffffff" stroke="#059669" stroke-width="1.5"/>
+  <text x="700" y="135" text-anchor="middle" font-size="11">Node-4</text>
+  <text x="700" y="150" text-anchor="middle" font-size="9" fill="#6b7280">Generation: 1</text>
+  <text x="700" y="165" text-anchor="middle" font-size="8" fill="#6b7280">nil</text>
+  <text x="50" y="220" font-size="14" font-weight="700" fill="#111827">After Node-2 Update (Generation becomes 2)</text>
+  <rect x="50" y="240" width="900" height="100" rx="6" fill="#f9fafb" stroke="#6b7280"/>
+  <rect x="100" y="260" width="120" height="60" rx="4" fill="#dcfce7" stroke="#059669" stroke-width="2"/>
+  <text x="160" y="285" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">Node-2</text>
+  <text x="160" y="300" text-anchor="middle" font-size="9" fill="#059669">Generation: 2</text>
+  <text x="160" y="315" text-anchor="middle" font-size="8" fill="#059669">headNode</text>
+  <line x1="220" y1="290" x2="280" y2="290" stroke="#059669" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="280" y="260" width="120" height="60" rx="4" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+  <text x="340" y="285" text-anchor="middle" font-size="11" font-weight="600">Node-1</text>
+  <text x="340" y="300" text-anchor="middle" font-size="9" fill="#6b7280">Generation: 1</text>
+  <line x1="400" y1="290" x2="460" y2="290" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="460" y="260" width="120" height="60" rx="4" fill="#ffffff" stroke="#059669" stroke-width="1.5"/>
+  <text x="520" y="285" text-anchor="middle" font-size="11">Node-3</text>
+  <text x="520" y="300" text-anchor="middle" font-size="9" fill="#6b7280">Generation: 1</text>
+  <line x1="580" y1="290" x2="640" y2="290" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="640" y="260" width="120" height="60" rx="4" fill="#ffffff" stroke="#059669" stroke-width="1.5"/>
+  <text x="700" y="285" text-anchor="middle" font-size="11">Node-4</text>
+  <text x="700" y="300" text-anchor="middle" font-size="9" fill="#6b7280">Generation: 1</text>
+  <text x="50" y="380" font-size="14" font-weight="700" fill="#111827">Snapshot Update (snapshot.generation = 1)</text>
+  <rect x="50" y="400" width="900" height="70" rx="6" fill="#faf5ff" stroke="#7c3aed"/>
+  <text x="65" y="420" font-size="10" fill="#6b7280">1. Iterate from headNode (Node-2)</text>
+  <text x="65" y="435" font-size="10" fill="#6b7280">2. Gen(2) > snapshotGen(1)? YES -> Update Node-2 in snapshot</text>
+  <text x="65" y="450" font-size="10" fill="#6b7280">3. Next: Node-1, Gen(1) <= snapshotGen(1)? YES -> STOP</text>
+  <text x="500" y="420" font-size="10" fill="#059669" font-weight="600">Result: Only 1 update instead of 4! Performance: O(1)</text>
+  <text x="500" y="435" font-size="10" fill="#7c3aed">Benefit: Scales with changes, not cluster size</text>
+</svg>

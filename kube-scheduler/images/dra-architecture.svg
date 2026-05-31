@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 750" width="960" height="750">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', 'SimHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ea580c"/>
+    </marker>
+  </defs>
+  <rect width="960" height="750" fill="#ffffff"/>
+  <text x="480" y="35" text-anchor="middle" font-size="20" font-weight="600" fill="#111827">Dynamic Resource Allocation (DRA) 架构图</text>
+  <!-- 顶层：用户层 -->
+  <g transform="translate(0, 60)">
+    <rect x="380" y="0" width="200" height="60" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="480" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="#111827">Pod / PodGroup</text>
+    <text x="480" y="48" text-anchor="middle" font-size="11" fill="#6b7280">Spec.ResourceClaims</text>
+  </g>
+  <!-- 中间层：控制平面 -->
+  <rect x="80" y="160" width="800" height="200" rx="8" ry="8" fill="#f9fafb" stroke="#d1d5db" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="480" y="190" text-anchor="middle" font-size="16" font-weight="600" fill="#111827">Kubernetes 控制平面</text>
+  <!-- API Server -->
+  <g transform="translate(120, 210)">
+    <rect x="0" y="0" width="160" height="130" rx="8" ry="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="80" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="#111827">API Server</text>
+    <text x="10" y="52" font-size="11" fill="#374151">• ResourceClaim</text>
+    <text x="10" y="72" font-size="11" fill="#374151">• ResourceClaimTemplate</text>
+    <text x="10" y="92" font-size="11" fill="#374151">• DeviceClass</text>
+    <text x="10" y="112" font-size="11" fill="#374151">• ResourceSlice</text>
+  </g>
+  <!-- Scheduler -->
+  <g transform="translate(320, 210)">
+    <rect x="0" y="0" width="160" height="130" rx="8" ry="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="80" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="#111827">Kube-Scheduler</text>
+    <text x="10" y="52" font-size="11" fill="#374151">• DynamicResources</text>
+    <text x="10" y="72" font-size="11" fill="#374151">  Plugin</text>
+    <text x="10" y="92" font-size="11" fill="#374151">• PreFilter/Filter/Reserve</text>
+    <text x="10" y="112" font-size="11" fill="#374151">• Structured Allocator</text>
+  </g>
+  <!-- Controller Manager -->
+  <g transform="translate(520, 210)">
+    <rect x="0" y="0" width="160" height="130" rx="8" ry="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="80" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="#111827">Controller Manager</text>
+    <text x="10" y="52" font-size="11" fill="#374151">• DRA Controller</text>
+    <text x="10" y="72" font-size="11" fill="#374151">• ResourceClaim</text>
+    <text x="10" y="92" font-size="11" fill="#374151">  Lifecycle</text>
+    <text x="10" y="112" font-size="11" fill="#374151">• ResourceSlice Sync</text>
+  </g>
+  <!-- 底层：节点层 -->
+  <rect x="80" y="410" width="800" height="260" rx="8" ry="8" fill="#f9fafb" stroke="#d1d5db" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="480" y="440" text-anchor="middle" font-size="16" font-weight="600" fill="#111827">Kubernetes 节点 (Node)</text>
+  <!-- Kubelet -->
+  <g transform="translate(150, 460)">
+    <rect x="0" y="0" width="180" height="170" rx="8" ry="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+    <text x="90" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="#111827">Kubelet</text>
+    <text x="10" y="52" font-size="11" fill="#374151">• DRA Manager</text>
+    <text x="10" y="72" font-size="11" fill="#374151">• PrepareResources()</text>
+    <text x="10" y="92" font-size="11" fill="#374151">• UnprepareResources()</text>
+    <text x="10" y="112" font-size="11" fill="#374151">• CDI Device Injection</text>
+    <text x="10" y="132" font-size="11" fill="#374151">• Health Monitoring</text>
+    <text x="10" y="152" font-size="11" fill="#374151">• ResourceUpdate Channel</text>
+  </g>
+  <!-- DRA Plugins -->
+  <g transform="translate(380, 460)">
+    <rect x="0" y="0" width="180" height="170" rx="8" ry="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+    <text x="90" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="#111827">DRA Plugins</text>
+    <text x="10" y="52" font-size="11" fill="#374151">• Plugin Manager</text>
+    <text x="10" y="72" font-size="11" fill="#374151">• NodePrepareResources</text>
+    <text x="10" y="92" font-size="11" fill="#374151">• NodeUnprepareResources</text>
+    <text x="10" y="112" font-size="11" fill="#374151">• WatchResources</text>
+    <text x="10" y="132" font-size="11" fill="#374151">• ResourceSlice 发布</text>
+  </g>
+  <!-- Device Drivers -->
+  <g transform="translate(610, 460)">
+    <rect x="0" y="0" width="180" height="170" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+    <text x="90" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="#111827">Device Drivers</text>
+    <text x="10" y="52" font-size="11" fill="#374151">• GPU / FPGA</text>
+    <text x="10" y="72" font-size="11" fill="#374151">• NIC / SmartNIC</text>
+    <text x="10" y="92" font-size="11" fill="#374151">• Custom Devices</text>
+    <text x="10" y="112" font-size="11" fill="#374151">• CDI Specs 输出</text>
+    <text x="10" y="132" font-size="11" fill="#374151">• 设备健康检查</text>
+  </g>
+  <!-- 箭头 - Pod → API Server -->
+  <path d="M 480 120 L 480 160" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+  <rect x="452" y="130" width="56" height="18" rx="2" ry="2" fill="#ffffff" opacity="0.95"/>
+  <text x="480" y="143" text-anchor="middle" font-size="11" fill="#111827">创建 Pod</text>
+  <!-- 箭头 - API Server → Scheduler -->
+  <path d="M 280 270 L 320 270" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+  <rect x="288" y="258" width="24" height="18" rx="2" ry="2" fill="#ffffff" opacity="0.95"/>
+  <text x="300" y="271" text-anchor="middle" font-size="10" fill="#111827">调度</text>
+  <!-- 箭头 - Scheduler → API Server -->
+  <path d="M 320 290 L 280 290" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arrow-green)"/>
+  <rect x="274" y="278" width="42" height="18" rx="2" ry="2" fill="#ffffff" opacity="0.95"/>
+  <text x="295" y="291" text-anchor="middle" font-size="10" fill="#111827">绑定 Pod</text>
+  <!-- 箭头 - API Server → Controller Manager -->
+  <path d="M 480 240 L 520 240" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arrow-green)"/>
+  <rect x="485" y="228" width="32" height="18" rx="2" ry="2" fill="#ffffff" opacity="0.95"/>
+  <text x="501" y="241" text-anchor="middle" font-size="10" fill="#111827">同步状态</text>
+  <!-- 箭头 - API Server → Kubelet -->
+  <path d="M 240 360 L 240 410" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+  <rect x="198" y="378" width="84" height="18" rx="2" ry="2" fill="#ffffff" opacity="0.95"/>
+  <text x="240" y="391" text-anchor="middle" font-size="10" fill="#111827">Pod 配置</text>
+  <!-- 箭头 - Kubelet → DRA Plugins -->
+  <path d="M 330 540 L 380 540" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arrow-purple)"/>
+  <rect x="338" y="528" width="36" height="18" rx="2" ry="2" fill="#ffffff" opacity="0.95"/>
+  <text x="356" y="541" text-anchor="middle" font-size="10" fill="#111827">Prepare</text>
+  <!-- 箭头 - DRA Plugins → Device Drivers -->
+  <path d="M 560 540 L 610 540" stroke="#ea580c" stroke-width="1.5" fill="none" marker-end="url(#arrow-orange)"/>
+  <rect x="568" y="528" width="36" height="18" rx="2" ry="2" fill="#ffffff" opacity="0.95"/>
+  <text x="586" y="541" text-anchor="middle" font-size="10" fill="#111827">分配设备</text>
+  <!-- 箭头 - Device Drivers → DRA Plugins -->
+  <path d="M 610 560 L 560 560" stroke="#ea580c" stroke-width="1.5" fill="none" marker-end="url(#arrow-orange)"/>
+  <rect x="568" y="548" width="36" height="18" rx="2" ry="2" fill="#ffffff" opacity="0.95"/>
+  <text x="586" y="561" text-anchor="middle" font-size="10" fill="#111827">CDI Spec</text>
+  <!-- 箭头 - DRA Plugins → Kubelet -->
+  <path d="M 380 560 L 330 560" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arrow-purple)"/>
+  <rect x="338" y="548" width="36" height="18" rx="2" ry="2" fill="#ffffff" opacity="0.95"/>
+  <text x="356" y="561" text-anchor="middle" font-size="10" fill="#111827">返回设备</text>
+  <!-- 箭头 - DRA Plugins → API Server (ResourceSlice) -->
+  <path d="M 470 460 L 470 360 L 400 360 L 400 340" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arrow-purple)"/>
+  <rect x="418" y="398" width="88" height="18" rx="2" ry="2" fill="#ffffff" opacity="0.95"/>
+  <text x="462" y="411" text-anchor="middle" font-size="10" fill="#111827">发布 ResourceSlice</text>
+  <!-- 图例 -->
+  <g transform="translate(20, 695)">
+    <line x1="0" y1="12" x2="30" y2="12" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+    <text x="36" y="16" fill="#6b7280" font-size="11">资源请求 / 调度</text>
+    <line x1="0" y1="32" x2="30" y2="32" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+    <text x="36" y="36" fill="#6b7280" font-size="11">状态更新 / 绑定</text>
+    <line x1="0" y1="52" x2="30" y2="52" stroke="#9333ea" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+    <text x="36" y="56" fill="#6b7280" font-size="11">DRA 插件通信</text>
+    <line x1="0" y1="72" x2="30" y2="72" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+    <text x="36" y="76" fill="#6b7280" font-size="11">设备驱动通信</text>
+  </g>
+</svg>

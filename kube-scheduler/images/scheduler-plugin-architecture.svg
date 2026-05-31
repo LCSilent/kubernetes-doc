@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 700" width="960" height="700">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', 'SimHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ea580c"/>
+    </marker>
+  </defs>
+  <rect width="960" height="700" fill="#ffffff"/>
+  <text x="480" y="40" text-anchor="middle" font-size="20" font-weight="600" fill="#111827">Kubernetes 调度插件架构</text>
+  <g transform="translate(60, 80)">
+    <rect x="0" y="0" width="180" height="60" rx="8" ry="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+    <text x="90" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#1e40af">Pod</text>
+    <text x="90" y="50" text-anchor="middle" font-size="12" fill="#6b7280">待调度 Pod</text>
+  </g>
+  <g transform="translate(280, 60)">
+    <rect x="0" y="0" width="400" height="520" rx="8" ry="8" fill="#ffffff" stroke="#d1d5db" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="200" y="30" text-anchor="middle" font-size="16" font-weight="600" fill="#111827">调度框架 Scheduling Framework</text>
+    <g transform="translate(20, 50)">
+      <rect x="0" y="0" width="360" height="50" rx="6" ry="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+      <text x="180" y="25" text-anchor="middle" font-size="14" font-weight="600" fill="#166534">QueueSort</text>
+      <text x="180" y="43" text-anchor="middle" font-size="11" fill="#6b7280">Pod 排序 (PrioritySort)</text>
+    </g>
+    <g transform="translate(20, 110)">
+      <rect x="0" y="0" width="360" height="50" rx="6" ry="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+      <text x="180" y="25" text-anchor="middle" font-size="14" font-weight="600" fill="#9a3412">PreFilter</text>
+      <text x="180" y="43" text-anchor="middle" font-size="11" fill="#6b7280">Pod 预检查</text>
+    </g>
+    <g transform="translate(20, 170)">
+      <rect x="0" y="0" width="360" height="50" rx="6" ry="6" fill="#fef2f2" stroke="#fecaca" stroke-width="1.5"/>
+      <text x="180" y="25" text-anchor="middle" font-size="14" font-weight="600" fill="#991b1b">Filter</text>
+      <text x="180" y="43" text-anchor="middle" font-size="11" fill="#6b7280">NodeResourcesFit, NodePorts, TaintToleration</text>
+    </g>
+    <g transform="translate(20, 230)">
+      <rect x="0" y="0" width="360" height="50" rx="6" ry="6" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.5"/>
+      <text x="180" y="25" text-anchor="middle" font-size="14" font-weight="600" fill="#7e22ce">PostFilter</text>
+      <text x="180" y="43" text-anchor="middle" font-size="11" fill="#6b7280">抢占 DefaultPreemption</text>
+    </g>
+    <g transform="translate(20, 290)">
+      <rect x="0" y="0" width="360" height="50" rx="6" ry="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+      <text x="180" y="25" text-anchor="middle" font-size="14" font-weight="600" fill="#1e40af">PreScore</text>
+      <text x="180" y="43" text-anchor="middle" font-size="11" fill="#6b7280">评分预处理</text>
+    </g>
+    <g transform="translate(20, 350)">
+      <rect x="0" y="0" width="360" height="50" rx="6" ry="6" fill="#f0fdfa" stroke="#a5f3fc" stroke-width="1.5"/>
+      <text x="180" y="25" text-anchor="middle" font-size="14" font-weight="600" fill="#155e75">Score</text>
+      <text x="180" y="43" text-anchor="middle" font-size="11" fill="#6b7280">ImageLocality, LeastAllocated, BalancedAllocation</text>
+    </g>
+    <g transform="translate(20, 410)">
+      <rect x="0" y="0" width="360" height="50" rx="6" ry="6" fill="#fefce8" stroke="#fef08a" stroke-width="1.5"/>
+      <text x="180" y="25" text-anchor="middle" font-size="14" font-weight="600" fill="#854d0e">Reserve</text>
+      <text x="180" y="43" text-anchor="middle" font-size="11" fill="#6b7280">资源预留</text>
+    </g>
+    <g transform="translate(20, 470)">
+      <rect x="0" y="0" width="360" height="40" rx="6" ry="6" fill="#fef3c7" stroke="#fcd34d" stroke-width="1.5"/>
+      <text x="180" y="25" text-anchor="middle" font-size="14" font-weight="600" fill="#92400e">Bind</text>
+    </g>
+  </g>
+  <g transform="translate(720, 180)">
+    <rect x="0" y="0" width="180" height="260" rx="8" ry="8" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+    <text x="90" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#111827">节点池 Node Pool</text>
+    <g transform="translate(20, 50)">
+      <rect x="0" y="0" width="140" height="50" rx="4" ry="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+      <text x="70" y="20" text-anchor="middle" font-size="12" fill="#111827">Node-1</text>
+      <text x="70" y="38" text-anchor="middle" font-size="10" fill="#6b7280">CPU: 8, Memory: 16G</text>
+    </g>
+    <g transform="translate(20, 110)">
+      <rect x="0" y="0" width="140" height="50" rx="4" ry="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+      <text x="70" y="20" text-anchor="middle" font-size="12" fill="#111827">Node-2</text>
+      <text x="70" y="38" text-anchor="middle" font-size="10" fill="#6b7280">CPU: 16, Memory: 32G</text>
+    </g>
+    <g transform="translate(20, 170)">
+      <rect x="0" y="0" width="140" height="50" rx="4" ry="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+      <text x="70" y="20" text-anchor="middle" font-size="12" fill="#111827">Node-3</text>
+      <text x="70" y="38" text-anchor="middle" font-size="10" fill="#6b7280">CPU: 8, Memory: 16G</text>
+    </g>
+  </g>
+  <path d="M 240 110 L 280 110" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+  <path d="M 680 195 L 720 195" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arrow-green)"/>
+  <text x="470" y="175" text-anchor="middle" font-size="11" fill="#6b7280">过滤候选节点</text>
+  <path d="M 720 250 L 680 250" stroke="#ea580c" stroke-width="1.5" fill="none" marker-end="url(#arrow-orange)"/>
+  <text x="470" y="380" text-anchor="middle" font-size="11" fill="#6b7280">评分候选节点</text>
+  <g transform="translate(720, 460)">
+    <rect x="0" y="0" width="180" height="60" rx="8" ry="8" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+    <text x="90" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#166534">绑定完成</text>
+    <text x="90" y="50" text-anchor="middle" font-size="12" fill="#6b7280">Pod 已分配到节点</text>
+  </g>
+  <path d="M 680 490 L 720 490" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+  <g transform="translate(40, 640)">
+    <text x="0" y="0" font-size="13" font-weight="600" fill="#111827">图例</text>
+    <line x1="0" y1="20" x2="40" y2="20" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+    <text x="50" y="24" font-size="11" fill="#6b7280">数据/控制流</text>
+    <line x1="160" y1="20" x2="200" y2="20" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+    <text x="210" y="24" font-size="11" fill="#6b7280">节点读取</text>
+    <line x1="330" y1="20" x2="370" y2="20" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+    <text x="380" y="24" font-size="11" fill="#6b7280">评分反馈</text>
+  </g>
+</svg>

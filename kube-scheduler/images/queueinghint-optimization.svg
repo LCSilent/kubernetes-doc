@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 650">
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  </style>
+  <rect width="960" height="650" fill="#ffffff"/>
+  <text x="480" y="40" text-anchor="middle" font-size="20" font-weight="600" fill="#111827">QueueingHint: 智能重试优化 (K8s 1.32+)</text>
+  <rect x="40" y="70" width="280" height="200" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="60" y="100" font-size="12" font-weight="700" fill="#dc2626">优化前的问题：</text>
+  <text x="60" y="125" font-size="10" fill="#6b7280">假设 1000 个 Pod 在</text>
+  <text x="60" y="140" font-size="10" fill="#6b7280">UnschedulablePool 中：</text>
+  <text x="60" y="160" font-size="10" fill="#6b7280">• 100个需要 GPU</text>
+  <text x="60" y="175" font-size="10" fill="#6b7280">• 200个需要 Zone A</text>
+  <text x="60" y="190" font-size="10" fill="#6b7280">• 700个资源不足</text>
+  <text x="60" y="215" font-size="10" fill="#6b7280">新节点加入（无GPU，Zone B）</text>
+  <text x="60" y="235" font-size="10" fill="#dc2626" font-weight="600">结果：1000个全部重试</text>
+  <text x="60" y="250" font-size="10" fill="#dc2626">999次还是失败！</text>
+  <rect x="340" y="70" width="560" height="200" rx="8" fill="#f0fdf4" stroke="#059669" stroke-width="1.5"/>
+  <text x="360" y="100" font-size="12" font-weight="700" fill="#059669">QueueingHint 解决方案：</text>
+  <text x="360" y="125" font-size="10" fill="#6b7280">问每个拒绝过这个Pod的插件：</text>
+  <text x="360" y="145" font-size="11" fill="#7c3aed" font-weight="600">"现在发生了这个事件，这个Pod能被调度了吗？"</text>
+  <rect x="360" y="160" width="160" height="80" rx="6" fill="#dcfce7" stroke="#059669" stroke-width="1"/>
+  <text x="440" y="185" text-anchor="middle" font-size="10" font-weight="600" fill="#059669">Queue</text>
+  <text x="440" y="200" text-anchor="middle" font-size="9" fill="#6b7280">立即重试</text>
+  <text x="440" y="215" text-anchor="middle" font-size="9" fill="#6b7280">（插件说可以）</text>
+  <rect x="540" y="160" width="160" height="80" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+  <text x="620" y="185" text-anchor="middle" font-size="10" font-weight="600" fill="#d97706">AfterBackoff</text>
+  <text x="620" y="200" text-anchor="middle" font-size="9" fill="#6b7280">退避后重试</text>
+  <text x="620" y="215" text-anchor="middle" font-size="9" fill="#6b7280">（不确定）</text>
+  <rect x="720" y="160" width="160" height="80" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
+  <text x="800" y="185" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">Skip</text>
+  <text x="800" y="200" text-anchor="middle" font-size="9" fill="#6b7280">继续等待</text>
+  <text x="800" y="215" text-anchor="middle" font-size="9" fill="#6b7280">（插件说不行）</text>
+  <text x="360" y="265" font-size="10" fill="#6b7280">实际效果：只重试可能有变化的Pod</text>
+  <text x="680" y="290" text-anchor="middle" font-size="12" font-weight="700" fill="#111827">优化后流程</text>
+  <rect x="540" y="310" width="360" height="60" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="720" y="340" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">集群事件发生</text>
+  <text x="720" y="358" text-anchor="middle" font-size="10" fill="#6b7280">节点加入 / Pod删除 / 资源变化</text>
+  <line x1="720" y1="370" x2="720" y2="410" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="540" y="410" width="360" height="60" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="720" y="440" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">遍历 UnschedulablePool</text>
+  <text x="720" y="458" text-anchor="middle" font-size="10" fill="#6b7280">问每个Pod的拒绝插件：这个事件有影响吗？</text>
+  <line x1="540" y1="440" x2="440" y2="510" stroke="#059669" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <line x1="720" y1="470" x2="720" y2="510" stroke="#d97706" stroke-width="2" marker-end="url(#arrow-purple)"/>
+  <line x1="900" y1="440" x2="1000" y2="510" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <rect x="320" y="510" width="160" height="60" rx="6" fill="#dcfce7" stroke="#059669" stroke-width="1.5"/>
+  <text x="400" y="540" text-anchor="middle" font-size="10" font-weight="600" fill="#059669">Queue / AfterBackoff</text>
+  <text x="400" y="558" text-anchor="middle" font-size="9" fill="#6b7280">移到BackoffQ重试</text>
+  <rect x="560" y="510" width="160" height="60" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="640" y="540" text-anchor="middle" font-size="10" font-weight="600" fill="#d97706">AfterBackoff</text>
+  <text x="640" y="558" text-anchor="middle" font-size="9" fill="#6b7280">延迟重试</text>
+  <rect x="800" y="510" width="160" height="60" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="880" y="540" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">Skip</text>
+  <text x="880" y="558" text-anchor="middle" font-size="9" fill="#6b7280">继续等待</text>
+  <rect x="40" y="590" width="880" height="50" rx="6" fill="#dcfce7" stroke="#059669" stroke-width="1.5"/>
+  <text x="60" y="615" font-size="12" font-weight="700" fill="#059669">性能提升：</text>
+  <text x="200" y="615" font-size="11" fill="#6b7280">• 调度器吞吐量提升 20-40%</text>
+  <text x="440" y="615" font-size="11" fill="#6b7280">• 减少无效重试次数</text>
+  <text x="660" y="615" font-size="11" fill="#6b7280">• 更智能的资源利用</text>
+</svg>
